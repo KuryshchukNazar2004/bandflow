@@ -1,0 +1,159 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  password      String?
+  role          UserRole  @default(USER)
+  accounts      Account[]
+  sessions      Session[]
+  band          Band?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+enum UserRole {
+  USER
+  ADMIN
+}
+
+model Account {
+  id                 String  @id @default(cuid())
+  userId             String
+  type               String
+  provider           String
+  providerAccountId  String
+  refresh_token      String? @db.Text
+  access_token       String? @db.Text
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String? @db.Text
+  session_state      String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Band {
+  id          String       @id @default(cuid())
+  name        String
+  slug        String       @unique
+  genre       String
+  city        String
+  bio         String?
+  price         Int          @default(0)
+  profileViews  Int          @default(0)
+  color         String?      @default("#7C3AED") // Default violet
+  userId      String       @unique // Link to User
+  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  members     Member[]
+  instruments Instrument[]
+  photos      Photo[]
+  services    Service[]
+  bookings    Booking[]
+  reviews     Review[]
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+}
+
+model Member {
+  id     String  @id @default(cuid())
+  bandId String
+  name   String
+  role   String
+  photo  String?
+  band   Band    @relation(fields: [bandId], references: [id], onDelete: Cascade)
+}
+
+model Instrument {
+  id     String @id @default(cuid())
+  bandId String
+  name   String
+  band   Band   @relation(fields: [bandId], references: [id], onDelete: Cascade)
+}
+
+model Photo {
+  id      String  @id @default(cuid())
+  bandId  String
+  url     String
+  caption String?
+  band    Band    @relation(fields: [bandId], references: [id], onDelete: Cascade)
+}
+
+model Service {
+  id          String  @id @default(cuid())
+  bandId      String
+  name        String
+  price       Int
+  description String?
+  band        Band    @relation(fields: [bandId], references: [id], onDelete: Cascade)
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  REFUNDED
+}
+
+model Booking {
+  id          String        @id @default(cuid())
+  bandId      String
+  clientName  String
+  clientEmail String
+  clientPhone String
+  eventType   String
+  date        DateTime
+  status      BookingStatus @default(PENDING)
+  paymentStatus PaymentStatus @default(PENDING)
+  price       Int?
+  note        String?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  band        Band          @relation(fields: [bandId], references: [id], onDelete: Cascade)
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  bandId    String
+  author    String
+  rating    Int
+  text      String
+  createdAt DateTime @default(now())
+  band      Band     @relation(fields: [bandId], references: [id], onDelete: Cascade)
+}
