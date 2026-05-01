@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
 import prisma from "@/lib/prisma"
 import { auth } from "@/auth"
-import { sendBookingCreatedEmail } from "@/lib/mail"
 
 export async function GET(req: NextRequest) {
   try {
@@ -72,26 +71,6 @@ export async function POST(req: NextRequest) {
         status: "PENDING",
       }
     })
-
-    // Send email notification to band owner
-    try {
-      const band = await prisma.band.findUnique({
-        where: { id: bandId },
-        include: { user: true }
-      })
-
-      if (band && band.user && band.user.email) {
-        await sendBookingCreatedEmail(
-          band.user.email,
-          clientName,
-          band.name,
-          new Date(date)
-        )
-      }
-    } catch (emailError) {
-      console.error("[EMAIL_ERROR]", emailError)
-      // Don't fail the request if email fails
-    }
 
     return NextResponse.json(booking)
   } catch (error) {

@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from "next/server"
 import prisma from "@/lib/prisma"
 import { auth } from "@/auth"
 import { BookingStatus } from "@prisma/client"
-import { sendBookingStatusEmail } from "@/lib/mail"
 
 export async function PUT(
   req: NextRequest,
@@ -47,22 +46,6 @@ export async function PUT(
       where: { id },
       data: updateData
     })
-
-    // Send email notification only on status change
-    if (status && status !== booking.status) {
-      try {
-        await sendBookingStatusEmail(
-          booking.clientEmail,
-          booking.clientName,
-          booking.band.name,
-          status as "CONFIRMED" | "CANCELLED",
-          booking.date
-        )
-      } catch (emailError) {
-        console.error("[EMAIL_ERROR]", emailError)
-        // Don't fail the request if email fails
-      }
-    }
 
     return NextResponse.json(updatedBooking)
   } catch (error) {
