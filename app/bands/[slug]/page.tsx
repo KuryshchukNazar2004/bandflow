@@ -6,6 +6,7 @@ import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { BookingModal } from "@/components/booking-modal"
 import { MapPin, Music2, Star, ArrowLeft, Users, Mic2, Guitar, Drum, Piano } from "lucide-react"
+import { Logo } from "@/components/logo"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { BandAvailabilityCalendar } from "@/components/band-availability-calendar"
@@ -82,11 +83,8 @@ export default async function BandProfilePage({
             <span>Маркетплейс</span>
           </Link>
           
-          <Link href="/" className="flex items-center gap-2 absolute left-1/2 -translate-x-1/2">
-            <div className="bg-[#2D1B69] text-white p-1.5 rounded-md">
-              <Music2 className="h-5 w-5" />
-            </div>
-            <span className="font-display text-xl font-bold text-[#2D1B69]">BandFlow</span>
+          <Link href="/" className="absolute left-1/2 -translate-x-1/2">
+            <Logo size="md" />
           </Link>
 
           <BookingModal 

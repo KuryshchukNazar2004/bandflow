@@ -3,6 +3,7 @@ import prisma from "@/lib/prisma"
 import Link from "next/link"
 import { Card } from "@/components/ui/card"
 import { Search, MapPin, Star, Music, ArrowRight } from "lucide-react"
+import { Logo } from "@/components/logo"
 import { MarketplaceToolbar } from "@/components/marketplace/marketplace-toolbar"
 
 export default async function MarketplacePage({
@@ -45,11 +46,8 @@ export default async function MarketplacePage({
       {/* Navbar */}
       <header className="border-b border-gray-100 bg-white/80 backdrop-blur-md sticky top-0 z-50">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2">
-            <div className="bg-[#2D1B69] text-white p-1.5 rounded-md">
-              <Music className="h-5 w-5" />
-            </div>
-            <span className="font-display text-xl font-bold text-[#2D1B69]">BandFlow</span>
+          <Link href="/">
+            <Logo size="md" />
           </Link>
           <div className="flex items-center gap-4">
             <Link href="/sign-in">

@@ -21,6 +21,7 @@ import {
   Music,
   ChevronRight
 } from "lucide-react"
+import { Logo } from "@/components/logo"
 import { signOut } from "next-auth/react"
 import { User as NextAuthUser } from "next-auth"
 
@@ -46,11 +47,8 @@ export function Sidebar({ bandSlug, user }: SidebarProps) {
   return (
     <div className="flex flex-col h-full bg-white border-r border-[#E4E1DC] text-[#4A4A57]">
       <div className="px-6 py-6">
-        <Link href="/dashboard" className="flex items-center gap-3 mb-10 pl-2">
-          <div className="w-8 h-8 rounded-lg bg-[#2D1B69] flex items-center justify-center text-white">
-            <Music size={18} />
-          </div>
-          <h1 className="text-xl font-medium font-serif text-[#2D1B69]">BandFlow</h1>
+        <Link href="/dashboard" className="mb-10 pl-2 inline-block">
+          <Logo size="md" />
         </Link>
         <div className="space-y-1">
           {routes.map((route) => {

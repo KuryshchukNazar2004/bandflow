@@ -1,5 +1,6 @@
 import Link from "next/link"
 import { Music } from "lucide-react"
+import { Logo } from "@/components/logo"
 
 export default function AuthLayout({
   children,
@@ -15,11 +16,8 @@ export default function AuthLayout({
         <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-[#5B21B6] rounded-full -translate-x-1/3 translate-y-1/3 blur-3xl opacity-50 pointer-events-none" />
 
         <div className="relative z-10">
-          <Link href="/" className="flex items-center gap-2 mb-20 w-fit hover:opacity-80 transition-opacity">
-            <div className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center border border-white/20">
-              <Music size={18} className="text-white" />
-            </div>
-            <span className="font-display text-xl">BandFlow</span>
+          <Link href="/" className="mb-20 w-fit hover:opacity-80 transition-opacity inline-block">
+            <Logo size="md" />
           </Link>
 
           <div className="max-w-lg">

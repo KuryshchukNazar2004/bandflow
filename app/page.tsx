@@ -3,7 +3,8 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { auth } from "@/auth"
 import prisma from "@/lib/prisma"
-import { ArrowRight, Search, Music, Calendar, Star, DollarSign, Rocket, Music2 } from "lucide-react"
+import { ArrowRight, Search, Music, Calendar, Star, DollarSign, Rocket } from "lucide-react"
+import { Logo } from "@/components/logo"
 
 export default async function LandingPage() {
   const session = await auth()
@@ -64,12 +65,7 @@ export default async function LandingPage() {
     <div className="flex flex-col min-h-screen font-sans bg-background text-foreground">
       {/* Header */}
       <header className="px-6 h-20 flex items-center justify-between sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-         <div className="flex items-center gap-2">
-           <div className="bg-primary text-white p-1 rounded-md">
-             <Music2 className="h-5 w-5" />
-           </div>
-           <span className="text-2xl font-display font-bold text-primary">BandFlow</span>
-         </div>
+         <Logo size="md" />
           <nav className="flex items-center gap-4">
            {!userId ? (
              <>
@@ -241,12 +237,7 @@ export default async function LandingPage() {
 
       <footer style={{ borderTop: "1px solid var(--border)", padding: "32px 5%", background: "var(--surface)" }}> 
          <div style={{ maxWidth: 1200, margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center" }}> 
-           <div className="flex items-center gap-2">
-             <div className="bg-primary text-white p-1 rounded-md">
-               <Music2 className="h-4 w-4" />
-             </div>
-             <span className="text-xl font-display font-bold text-primary">BandFlow</span>
-           </div>
+           <Logo size="sm" />
            <p style={{ fontSize: 13, color: "var(--text2)" }}>© 2025 BandFlow. Всі права захищені.</p> 
          </div> 
       </footer>
