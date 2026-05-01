@@ -26,7 +26,7 @@ const formSchema = z.object({
   clientEmail: z.string().email("Невірний email"),
   clientPhone: z.string().min(10, "Номер телефону занадто короткий"),
   eventType: z.string().min(2, "Вкажіть тип події"),
-  date: z.date({ required_error: "Оберіть дату" }),
+  date: z.date({ message: "Оберіть дату" }),
   note: z.string().optional(),
 })
 
